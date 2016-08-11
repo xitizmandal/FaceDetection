@@ -5,7 +5,8 @@
         <group>
             <file>file:/G:/android/GIT/CompleteHaar/src/WeakClassifier/WeakLearner.java</file>
             <file>file:/G:/android/GIT/CompleteHaar/src/HaarComplete/HaarComplete.java</file>
-            <file>file:/G:/android/GIT/CompleteHaar/src/haarfilterall/features/Features.java</file>
+            <file>file:/G:/android/GIT/CompleteHaar/src/WeakClassifier/util/CummulativeSummation.java</file>
+            <file>file:/G:/android/GIT/CompleteHaar/src/WeakClassifier/util/SortPlusIndex.java</file>
         </group>
     </open-files>
 </project-private>
