@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package StrongClassifier;
+import WeakClassifier.WeakLearner;
 import java.lang.Math;
 
 /**
@@ -27,11 +28,12 @@ public class StrongClassifier {
     private int[] strLearner_result;
     private float[] truePositiveRate;
     private float[] falsePositiveRate;
-    private float[][][] features3d;
+    private float[][] completeFeatures;
+    private int[] labels;
     
-    public StrongClassifier(int CascadeIteration, float[][][] features3dAll,  int[] indicesAll, int stage){   
+    public StrongClassifier(int CascadeIteration, float[][] completeFeatures,  int[] indicesAll, int stage){   
         this.mCascadeIteration = CascadeIteration;
-        this.features3d = features3dAll;
+        this.completeFeatures = completeFeatures;
         this.mIndicesAll = indicesAll;
         this.mStage = stage;
         this.mNegativeTrainSize = indicesAll.length - mPositiveTrainSize;
@@ -158,8 +160,9 @@ public class StrongClassifier {
             imageWeight = normalizeWeights(imageWeight);
             
             //Select the weak classifier
-//            weakClassifier = getWeakClassifer(features, imageWeight, mNoOfFeatures, mPositiveTrainSize, mTotalTrainSize);
-            
+            WeakLearner weakLearner = new WeakLearner();
+            weakLearner.TrainWeakLearner(mPositiveTrainSize, mNegativeTrainSize,
+                    mTotalTrainSize, imageWeight, labels, completeFeatures);
             //Get this values from the weak classifier;
             //Return values of getWeakClassifier;
             minError = weakClassifier[0][t];
