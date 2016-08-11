@@ -14,14 +14,17 @@ import WeakClassifier.util.SortPlusIndex;
  */
 public class WeakLearner {
 
+    private float threshold, minErr;
+    private int polarity, featInd;
+    private int[] bestResult;
+
     public void TrainWeakLearner(int posImageNum, int negImageNumber, int totalImage, float[] weights, int[] labels, float[][] completeFeatures) {
         float tPlus = 0, tMinus = 0;
-        int polar, polarity, featInd;
-        float minErr = 999999999;
-        float threshold;
+        int polar;
+        minErr = 999999999;
 
         int[] result = new int[totalImage];
-        int[] bestResult = new int[totalImage];
+        bestResult = new int[totalImage];
         float[] oneFeat = new float[totalImage];
         float[] sortOneFeat = new float[totalImage];
         float[] cumSortedOneFeature = new float[113472];
@@ -129,5 +132,25 @@ public class WeakLearner {
             }
 
         }
+    }
+
+    public float getThreshold() {
+        return this.threshold;
+    }
+
+    public int getPolarity() {
+        return this.polarity;
+    }
+
+    public int getFeatInd() {
+        return this.featInd;
+    }
+
+    public int[] getBestResult() {
+        return this.bestResult;
+    }
+
+    public float getMinErr() {
+        return this.minErr;
     }
 }
