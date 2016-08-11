@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 
 /**
  *
- * @author user
+ * @author Aditya Acharya
  */
 public class HistEq {
 
@@ -41,7 +41,7 @@ public class HistEq {
 
         /*
          *
-         **HISTOGRAM EQUILIZATION SECTION
+         **HISTOGRAM EQUALIZATION SECTION
          *
          */
         int numBands = bi.getRaster().getNumBands();
@@ -57,23 +57,18 @@ public class HistEq {
         }
 
         //calculate min frequency of occurance
-        //int indexNo = 0;
         int minFrequencyCount = anzpixel;
         for (int k = 0; k < 255; k++) {
             if (histogram[k] < minFrequencyCount && histogram[k] != 0) {
                 minFrequencyCount = histogram[k];
-                //indexNo = k;
             }
         }
 
-        //System.out.println(minFrequencyCount + " " + indexNo);
         // build a Lookup table LUT containing scale factor
         float[] lut = new float[anzpixel];
 
         for (i = 0; i < 255; ++i) {
-
             sum += histogram[i];
-//          lut[i] = sum * 255 / anzpixel;
             lut[i] = ((sum - minFrequencyCount) * 255) / (anzpixel - minFrequencyCount);
         }
 

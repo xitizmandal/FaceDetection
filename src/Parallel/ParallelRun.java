@@ -48,27 +48,12 @@ public class ParallelRun implements Runnable {
             default:
                 break;
         }
-//        if (tasknumber == 1) {
-//            twoHoriFea = features.FeatureA(2, 1, intValues);
-////            System.out.println("F 1");
-////            Thread.sleep(50);
-//        } else if (tasknumber == 2) {
-//            twoVertFea = features.FeatureB(1, 2, intValues);
-////            Thread.sleep(50);
-////            System.out.println("F 2");
-//        } else if (tasknumber == 3) {
-//            threeHoriFea = features.FeatureC(3, 1, intValues);
-//        } else if (tasknumber == 4) {
-//            fourRectFea = features.FeatureE(2, 2, intValues);
-//        }
     }
 
     public void start() {
-//        System.out.println("Starting " + threadName);
         if (t == null) {
             t = new Thread(this, threadName);
             t.start();
-
         }
     }
 }
