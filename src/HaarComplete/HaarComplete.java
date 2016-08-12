@@ -8,6 +8,7 @@ package HaarComplete;
 import HistogramEqualization.impl.HistEq;
 import HistogramEqualization.util.HistoNormalize;
 import Parallel.ParallelRun;
+import StrongClassifier.StrongClassifier;
 import haarfilterall.features.Features;
 import haarfilterall.util.IntegralImage;
 import java.awt.image.BufferedImage;
@@ -47,7 +48,7 @@ public class HaarComplete {
 
         for (int imageCount = 0; imageCount <= testImagesNum; imageCount++) {
             BufferedImage img = null;
-            img = ImageIO.read(new File("G:\\android\\GIT\\CompleteHaar\\image\\test" + (imageCount + 1) + ".png"));
+            img = ImageIO.read(new File("image/test" + (imageCount + 1) + ".png"));
 
             HistEq histEq = new HistEq();                                           //call histogram equilization
             img = histEq.Change(img);                                               //retreive equilized image
@@ -102,6 +103,20 @@ public class HaarComplete {
             }
 
         }
+        int[] indicesAll = new int[180];
+        int[] labels = new int[180];
+        for(int i = 0; i < 178; i++){
+            indicesAll[i] = i;
+            labels[i] = 1;
+        }
+        
+        indicesAll[178] = 178;
+        indicesAll[179] = 179;
+        labels[178] = -1;
+        labels[179] = -1;
+        
+        StrongClassifier strongClassifier = new StrongClassifier(20,completeFeatures,indicesAll, 1, labels);
+        strongClassifier.trainStrongClassifier();
 
 //        System.out.println("IMAGE NUMBER = " + count);
     }

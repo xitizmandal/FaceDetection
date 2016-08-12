@@ -3,22 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Classifier.util;
-
-import java.util.Comparator;
+package StrongClassifier.util;
 
 /**
  *
  * @author xitiz
  */
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-	
 
-public class ArrayIndexComparator implements Comparator<Integer>
-{
-    private final float[] array;
+import java.util.Comparator;
 
-    public ArrayIndexComparator(float[] array)
+public class ArrayIndexComparator implements Comparator<Integer> {
+     private final int[] array;
+
+    public ArrayIndexComparator(int[] array)
     {
         this.array = array;
     }
@@ -46,3 +49,4 @@ public class ArrayIndexComparator implements Comparator<Integer>
         }
     }
 }
+
