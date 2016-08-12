@@ -13,7 +13,7 @@ import java.lang.Math;
  * @author xitiz
  */
 public class StrongClassifier {
-    private int mPositiveTrainSize = 178;
+    private int mPositiveTrainSize = 1068;
     private int mNegativeTrainSize;
     private int mNoOfFeatures = 113472;         //For Our image set
     private int mTotalTrainSize;//noTrain
@@ -39,6 +39,7 @@ public class StrongClassifier {
         this.mStage = stage;
         this.mNegativeTrainSize = indicesAll.length - mPositiveTrainSize;
         this.mTotalTrainSize = mPositiveTrainSize + mNegativeTrainSize;
+        System.out.println(mPositiveTrainSize + "   " + mNegativeTrainSize);
         this.labels = labels;
         this.weakClassifier = new float[4][mCascadeIteration];
         this.ht_result = new float[mTotalTrainSize][mCascadeIteration];

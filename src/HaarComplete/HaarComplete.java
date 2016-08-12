@@ -37,8 +37,8 @@ public class HaarComplete {
         int[][] intValues = new int[24][24];
         int[] iarray = new int[3];
 
-        int testImagesNum = 179;
-        int totalImageNumber = 180;
+        int testImagesNum = 2267;
+        int totalImageNumber = testImagesNum + 1;
         int totalFeaturesNum = 113472;
 
         Features features = new Features();
@@ -79,7 +79,7 @@ public class HaarComplete {
                     //R3.start();
                     //ParallelRun R4 = new ParallelRun("Filter2", 4, intValues);
                     //R4.start();
-                    if (count == 1) {
+//                    if (count == 1) {
                         twoHoriFea = features.FeatureA(2, 1, intValues);
                         twoVertFea = features.FeatureB(1, 2, intValues);
                         threeHoriFea = features.FeatureC(3, 1, intValues);
@@ -97,23 +97,23 @@ public class HaarComplete {
                         for (int comboCntr = 96048; comboCntr < 113472; comboCntr++) {
                             completeFeatures[imageCount][comboCntr] = fourRectFea[comboCntr - 96048];
                         }
-                    }
+//                    }
                 }
                 //Normalize Histogram Portion Remaining!!
             }
 
         }
-        int[] indicesAll = new int[180];
-        int[] labels = new int[180];
-        for(int i = 0; i < 178; i++){
+        int[] indicesAll = new int[2268];
+        int[] labels = new int[2268];
+        for(int i = 0; i < 1068; i++){
             indicesAll[i] = i;
             labels[i] = 1;
         }
         
-        indicesAll[178] = 178;
-        indicesAll[179] = 179;
-        labels[178] = -1;
-        labels[179] = -1;
+         for(int i = 1068; i < 2268; i++){
+            indicesAll[i] = i;
+            labels[i] = 0;
+        }
         
         StrongClassifier strongClassifier = new StrongClassifier(20,completeFeatures,indicesAll, 1, labels);
         strongClassifier.trainStrongClassifier();
