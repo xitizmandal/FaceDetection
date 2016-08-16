@@ -37,6 +37,7 @@ public class HaarComplete {
         int[][] intValues = new int[24][24];
         int[] iarray = new int[3];
 
+
         int testImagesNum = 2267;
         int totalImageNumber = testImagesNum + 1;
         int totalFeaturesNum = 113472;
@@ -54,7 +55,6 @@ public class HaarComplete {
 //            } else {
 //                img = ImageIO.read(new File("image/test" + (imageCount + 1+ 890) + ".png"));
 //            }
-            
 
             HistEq histEq = new HistEq();                                           //call histogram equilization
             img = histEq.Change(img);                                               //retreive equilized image
@@ -86,23 +86,24 @@ public class HaarComplete {
                     //ParallelRun R4 = new ParallelRun("Filter2", 4, intValues);
                     //R4.start();
 //                    if (count == 1) {
-                        twoHoriFea = features.FeatureA(2, 1, intValues);
-                        twoVertFea = features.FeatureB(1, 2, intValues);
-                        threeHoriFea = features.FeatureC(3, 1, intValues);
-                        fourRectFea = features.FeatureE(2, 2, intValues);
 
-                        for (int comboCntr = 0; comboCntr < 36432; comboCntr++) {
-                            completeFeatures[imageCount][comboCntr] = twoHoriFea[comboCntr];
-                        }
-                        for (int comboCntr = 36432; comboCntr < 72864; comboCntr++) {
-                            completeFeatures[imageCount][comboCntr] = twoVertFea[comboCntr - 36432];
-                        }
-                        for (int comboCntr = 72864; comboCntr < 96048; comboCntr++) {
-                            completeFeatures[imageCount][comboCntr] = threeHoriFea[comboCntr - 72864];
-                        }
-                        for (int comboCntr = 96048; comboCntr < 113472; comboCntr++) {
-                            completeFeatures[imageCount][comboCntr] = fourRectFea[comboCntr - 96048];
-                        }
+                    twoHoriFea = features.FeatureA(2, 1, intValues);
+                    twoVertFea = features.FeatureB(1, 2, intValues);
+                    threeHoriFea = features.FeatureC(3, 1, intValues);
+                    fourRectFea = features.FeatureE(2, 2, intValues);
+
+                    for (int comboCntr = 0; comboCntr < 36432; comboCntr++) {
+                        completeFeatures[imageCount][comboCntr] = twoHoriFea[comboCntr];
+                    }
+                    for (int comboCntr = 36432; comboCntr < 72864; comboCntr++) {
+                        completeFeatures[imageCount][comboCntr] = twoVertFea[comboCntr - 36432];
+                    }
+                    for (int comboCntr = 72864; comboCntr < 96048; comboCntr++) {
+                        completeFeatures[imageCount][comboCntr] = threeHoriFea[comboCntr - 72864];
+                    }
+                    for (int comboCntr = 96048; comboCntr < 113472; comboCntr++) {
+                        completeFeatures[imageCount][comboCntr] = fourRectFea[comboCntr - 96048];
+                    }
 //                    }
                 }
                 //Normalize Histogram Portion Remaining!!

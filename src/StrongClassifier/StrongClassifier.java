@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package StrongClassifier;
+
 import WeakClassifier.WeakLearner;
 import StrongClassifier.util.SortPlusIndex;
 import java.io.File;
@@ -17,6 +18,7 @@ import java.lang.Math;
  * @author xitiz
  */
 public class StrongClassifier {
+
     private int mPositiveTrainSize = 1068;
     private int mNegativeTrainSize;
     private int mNoOfFeatures = 113472;         //For Our image set
@@ -36,8 +38,8 @@ public class StrongClassifier {
     private float[][] completeFeatures;
     private int[] labels;
     private String writeContent;
-    
-    public StrongClassifier(int CascadeIteration, float[][] completeFeatures,  int[] indicesAll, int stage,int[] labels){   
+
+    public StrongClassifier(int CascadeIteration, float[][] completeFeatures, int[] indicesAll, int stage, int[] labels) {
         this.mCascadeIteration = CascadeIteration;
         this.completeFeatures = completeFeatures;
         this.mIndicesAll = indicesAll;
@@ -53,69 +55,69 @@ public class StrongClassifier {
         this.truePositiveRate = new float[mCascadeIteration];
         this.falsePositiveRate = new float[mCascadeIteration];
         this.writeContent = "";
-        
+
         //initializeFeatures();
         initializeWeights(mTotalTrainSize);
     }
-        
-    private void initializeFeatures(){
-        
+
+    private void initializeFeatures() {
+
     }
-    
-    private void initializeWeights(int totalTrainSize){
+
+    private void initializeWeights(int totalTrainSize) {
         imageWeight = new float[totalTrainSize];
-        for(int i = 0; i < totalTrainSize;i++){
-            if(i<mPositiveTrainSize){
-                imageWeight[i] = (float) (0.5/mPositiveTrainSize);
+        for (int i = 0; i < totalTrainSize; i++) {
+            if (i < mPositiveTrainSize) {
+                imageWeight[i] = (float) (0.5 / mPositiveTrainSize);
 //                System.out.println(imageWeight[i]);
             } else {
-                imageWeight[i] = (float) (0.5/mNegativeTrainSize);
+                imageWeight[i] = (float) (0.5 / mNegativeTrainSize);
 //                System.out.println(imageWeight[i]);
             }
         }
     }
-    
-    public float[] normalizeWeights(float[] weights){
+
+    public float[] normalizeWeights(float[] weights) {
         float totalWeightSum = weightSum(weights);
         float[] normalizedWeight = new float[weights.length];
-        
-        for (int i = 0; i < weights.length;i++){
-            normalizedWeight[i] = weights[i]/totalWeightSum;
+
+        for (int i = 0; i < weights.length; i++) {
+            normalizedWeight[i] = weights[i] / totalWeightSum;
 //            System.out.println(normalizedWeight[i]);
         }
         return normalizedWeight;
     }
-    
-    public float weightSum(float[] weights){
+
+    public float weightSum(float[] weights) {
         float totalSum = 0;
-        for (int i = 0; i < (weights.length); i++){
+        for (int i = 0; i < (weights.length); i++) {
             totalSum += weights[i];
         }
         return totalSum;
     }
-    
-    public float[] updateWeights(float beta, float[] weights, int[] compareLabels){
+
+    public float[] updateWeights(float beta, float[] weights, int[] compareLabels) {
         float temp;
 
-        for(int i = 0; i< weights.length;i++){
-            temp = (float) Math.pow((float) beta,1-compareLabels[i]);                //ei = compareLabels
+        for (int i = 0; i < weights.length; i++) {
+            temp = (float) Math.pow((float) beta, 1 - compareLabels[i]);                //ei = compareLabels
             weights[i] = weights[i] * temp;
-        }   
+        }
         return weights;
     }
-    
-    public void setHTResult(int t, int[] classification){
-        for(int i = 0; i < classification.length;i++){
+
+    public void setHTResult(int t, int[] classification) {
+        for (int i = 0; i < classification.length; i++) {
             ht_result[i][t] = classification[i];
         }
     }
-    
+
     //Matrix Multiplication.
-    public float[] strongLearner(int t){
+    public float[] strongLearner(int t) {
         float[] strLearner = new float[ht_result.length];
         float sum = 0;
-        for (int i = 0;i < ht_result.length; i++){
-            for(int j = 0; j < t; j++){
+        for (int i = 0; i < ht_result.length; i++) {
+            for (int j = 0; j < t; j++) {
                 sum += ht_result[i][j] * alpha[j];
             }
             strLearner[i] = sum;
@@ -123,66 +125,66 @@ public class StrongClassifier {
         }
         return strLearner;
     }
-    
-    public float[] getThresholdRange(float[] values){
+
+    public float[] getThresholdRange(float[] values) {
         float[] thresholdRange = new float[mPositiveTrainSize];
         System.arraycopy(values, 0, thresholdRange, 0, mPositiveTrainSize);
         return thresholdRange;
     }
-    
-    public float getMinimumValue(float[] values){
+
+    public float getMinimumValue(float[] values) {
         float minimumValue = mTotalTrainSize;                 //max value of threshold cannot be greater than total number of images
-        for (int i = 0; i < values.length; i++){
-            if (values[i] < minimumValue){
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] < minimumValue) {
                 minimumValue = values[i];
             }
         }
         return minimumValue;
     }
-    
-    public void setStrLearnerResult(float[] strLearner,float thresholdStrong){
-        for (int i = 0; i<mTotalTrainSize;i++){
-                if(strLearner[i] >= thresholdStrong){
-                    strLearner_result[i] = 1;
-                } else {
-                    strLearner_result[i] = 0;
-                }
+
+    public void setStrLearnerResult(float[] strLearner, float thresholdStrong) {
+        for (int i = 0; i < mTotalTrainSize; i++) {
+            if (strLearner[i] >= thresholdStrong) {
+                strLearner_result[i] = 1;
+            } else {
+                strLearner_result[i] = 0;
             }
+        }
     }
-    
-    public float getSum(int startIndex, int endIndex){
+
+    public float getSum(int startIndex, int endIndex) {
         float sum = 0;
-        for(int i = startIndex; i < endIndex; i++){
+        for (int i = startIndex; i < endIndex; i++) {
             sum += strLearner_result[i];
         }
         return sum;
     }
-    
+
     //For sorting negative test images only
     //Not needed
-    public int[] sortStrongListener(){
+    public int[] sortStrongListener() {
         int tempIndex = strLearner_result.length - mPositiveTrainSize;
         int[] temp = new int[tempIndex];
-        
+
         System.arraycopy(strLearner_result, mPositiveTrainSize, temp, 0, tempIndex);
-        
+
         int tempValue;              //Our comparision value is either 0 or 1
-        for(int i=1;i < temp.length; i++){
-            for(int j = 0; j < temp.length - i ; j++){
-                if(temp[j] < temp[j+1]){
+        for (int i = 1; i < temp.length; i++) {
+            for (int j = 0; j < temp.length - i; j++) {
+                if (temp[j] < temp[j + 1]) {
                     tempValue = temp[j];
-                    temp[j] = temp[j+1];
-                    temp[j+1] = tempValue;
+                    temp[j] = temp[j + 1];
+                    temp[j + 1] = tempValue;
                 }
             }
         }
         return temp;
     }
-    
-    public int[] comparedLabels(int[] labels,int[] classifyResult){
+
+    public int[] comparedLabels(int[] labels, int[] classifyResult) {
         int[] compareLabels = new int[labels.length];
-        for (int i = 0; i < labels.length; i++){
-            if (labels[i] == classifyResult[i]){
+        for (int i = 0; i < labels.length; i++) {
+            if (labels[i] == classifyResult[i]) {
                 compareLabels[i] = 0;
             } else {
                 compareLabels[i] = 1;
@@ -190,50 +192,50 @@ public class StrongClassifier {
         }
         return compareLabels;
     }
-    
-    private void setNextIndexAll(int[] nextIndexAll){
+
+    private void setNextIndexAll(int[] nextIndexAll) {
         this.mNextIndicesAll = nextIndexAll;
     }
-    
-    public int[] getnextIndexAll(){
-        return mNextIndicesAll;       
+
+    public int[] getnextIndexAll() {
+        return mNextIndicesAll;
     }
-    
-    private int[] setNegativeInd(int[] negativeInd, int start){
+
+    private int[] setNegativeInd(int[] negativeInd, int start) {
         int[] retInd = new int[negativeInd.length - start];
-        for (int i = 0; i < negativeInd.length - start; i++){
+        for (int i = 0; i < negativeInd.length - start; i++) {
             retInd[i] = negativeInd[start];
             start++;
         }
         return retInd;
     }
-    
-    private int[] setValueNextIndexAll(int[] negativeIndexAll){
+
+    private int[] setValueNextIndexAll(int[] negativeIndexAll) {
         int[] value = new int[mPositiveTrainSize + negativeIndexAll.length];
-        for (int i = 0; i < mPositiveTrainSize; i ++){
+        for (int i = 0; i < mPositiveTrainSize; i++) {
             value[i] = i;
         }
-        
-        for(int i = 0; i < (negativeIndexAll.length); i++){
-            value[i+mPositiveTrainSize] = negativeIndexAll[i];
+
+        for (int i = 0; i < (negativeIndexAll.length); i++) {
+            value[i + mPositiveTrainSize] = negativeIndexAll[i];
         }
         return value;
     }
-    
-    public void trainStrongClassifier(){
-        for(int t = 0 ;t < mCascadeIteration; t++){
+
+    public void trainStrongClassifier() {
+        for (int t = 0; t < mCascadeIteration; t++) {
             float minError, threshold, beta;
             int polarity, featureIndex;
             int[] classifyResult = new int[mPositiveTrainSize];
-            
+
             //Normalize the Weights
             imageWeight = normalizeWeights(imageWeight);
-            
+
             //Select the weak classifier
             WeakLearner weakLearner = new WeakLearner();
             weakLearner.TrainWeakLearner(mPositiveTrainSize, mNegativeTrainSize,
                     mTotalTrainSize, imageWeight, labels, completeFeatures);
-            
+
             //Get this values from the weak classifier;
             //Return values of getWeakClassifier;
             minError = weakLearner.getMinErr();
@@ -242,82 +244,81 @@ public class StrongClassifier {
             featureIndex = weakLearner.getFeatInd();
             classifyResult = weakLearner.getBestResult();
 //            classifyResult = weakClassifier[4][t];
-            
+
             weakClassifier[0][t] = minError;
             weakClassifier[1][t] = polarity;
             weakClassifier[2][t] = threshold;
-            weakClassifier[3][t] = featureIndex;        
-            
-            
-            setHTResult(t,classifyResult);
-            
+            weakClassifier[3][t] = featureIndex;
+
+            setHTResult(t, classifyResult);
+
             //Set beta Value
-            beta = minError/(1 - minError);
+            beta = minError / (1 - minError);
 //            beta = (float) 0.5;
-            
+
             System.out.println(minError + " " + beta);
-            
+
             //Set ei for updatting weights
-            int[] compareLabels = comparedLabels(labels,classifyResult);
-            
+            int[] compareLabels = comparedLabels(labels, classifyResult);
+
             //Update Weights
             imageWeight = updateWeights(beta, imageWeight, compareLabels);
-            
+
             //Set alpha for weak Classifier t
-            alpha[t] = (float) (Math.log(1/beta));
-            
-             System.out.println("Classifier " + t +" minError " + weakClassifier[0][t]
-            +" Polarity " + weakClassifier[1][t]
-            +" threshold " + weakClassifier[2][t]
-            +" featureIndex " + weakClassifier[3][t]
-            +" alpha " + alpha[t]);
-            
-            String content = ("Classifier " + t +" minError " + weakClassifier[0][t]
-            +" Polarity " + weakClassifier[1][t]
-            +" threshold " + weakClassifier[2][t]
-            +" featureIndex " + weakClassifier[3][t] + " alpha " + alpha[t] +"\n");
-            
+            alpha[t] = (float) (Math.log(1 / beta));
+
+            System.out.println("Classifier " + t + " minError " + weakClassifier[0][t]
+                    + " Polarity " + weakClassifier[1][t]
+                    + " threshold " + weakClassifier[2][t]
+                    + " featureIndex " + weakClassifier[3][t]
+                    + " alpha " + alpha[t]);
+
+            String content = ("Classifier " + t + " minError " + weakClassifier[0][t]
+                    + " Polarity " + weakClassifier[1][t]
+                    + " threshold " + weakClassifier[2][t]
+                    + " featureIndex " + weakClassifier[3][t] + " alpha " + alpha[t] + "\n");
+
             writeContent += content;
-            
+
             //strongLearner
             float[] strLearner = strongLearner(t);
-            
+
             //Strong classifier threshold
             float thresholdStrong = getMinimumValue(getThresholdRange(strLearner));
-            
-            setStrLearnerResult(strLearner,thresholdStrong);
-            
-            truePositiveRate[t] = (getSum(0,mPositiveTrainSize))/mPositiveTrainSize;
-            falsePositiveRate[t] = (getSum(mPositiveTrainSize,mTotalTrainSize))/mNegativeTrainSize;
-            
-            if (truePositiveRate[t] == 1 && falsePositiveRate[t] <= 0.5){
+
+            setStrLearnerResult(strLearner, thresholdStrong);
+
+            truePositiveRate[t] = (getSum(0, mPositiveTrainSize)) / mPositiveTrainSize;
+            falsePositiveRate[t] = (getSum(mPositiveTrainSize, mTotalTrainSize)) / mNegativeTrainSize;
+
+            if (truePositiveRate[t] == 1 && falsePositiveRate[t] <= 0.5) {
                 break;
-            }      
+            }
         }
-        
+
         try {
-                FileWriter writer = new FileWriter(new File("Classifier.txt"));
-                writer.write(writeContent);
-                writer.close();
+            FileWriter writer = new FileWriter(new File("Classifier.txt"));
+            writer.write(writeContent);
+            writer.close();
         } catch (IOException e) {
         }
-        
+
         //Use SortPlusIndex of StrongClassifier.util
         SortPlusIndex sortPlusIndex = new SortPlusIndex(strLearner_result);
         int[] temp = sortPlusIndex.getSortedArray();
         int[] nextNegativeIndex = sortPlusIndex.getActualIndex();
 //        int[] nextNegativeIndex = convertIntegerToInt(nextNegativeInd);
-        
-        for(int i = 0; i < mNegativeTrainSize; i++){
-            if (nextNegativeIndex[i] > 0){
+
+        for (int i = 0; i < mNegativeTrainSize; i++) {
+            if (nextNegativeIndex[i] > 0) {
                 //need to set nextNegIndex
-                nextNegativeIndex = setNegativeInd(nextNegativeIndex,i);
+                nextNegativeIndex = setNegativeInd(nextNegativeIndex, i);
                 break;
             }
         }
-        
+
         int[] nextIndexAll = setValueNextIndexAll(nextNegativeIndex);
-        
+
         setNextIndexAll(nextIndexAll);
-    }    
+    }
 }

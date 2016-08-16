@@ -14,14 +14,17 @@ import WeakClassifier.util.SortPlusIndex;
  */
 public class WeakLearner {
 
-    private float threshold, minErr;
+    private float minErr, threshold;
+//    private double threshold;
     private int polarity, featInd;
     private int[] bestResult;
 
     public void TrainWeakLearner(int posImageNum, int negImageNumber, int totalImage, float[] weights, int[] labels, float[][] completeFeatures) {
         float tPlus = 0, tMinus = 0;
         int polar;
-        minErr = 999999999;
+        minErr = (float) 10000.0;
+        float minOneFeatErr = (float) 19999.0;
+        int minInd = 0;
 
         int[] result = new int[totalImage];
         bestResult = new int[totalImage];
@@ -29,7 +32,7 @@ public class WeakLearner {
         float[] sortOneFeat = new float[totalImage];
         float[] cumSortedOneFeature = new float[113472];
 
-        Integer[] sortInd = new Integer[totalImage];
+        int[] sortInd = new int[totalImage];
         float[] sortWeights = new float[totalImage];
         int[] sortLabels = new int[totalImage];
         float[] sPlus = new float[totalImage];
@@ -47,93 +50,113 @@ public class WeakLearner {
         }
 
         //For all features of all images
-        for (int feaCount = 0; feaCount < 113472; feaCount++) {
+        for (int feaCount = 1; feaCount < 113472; feaCount++) {
 
-            //Get required Feature from all images
-            for (int imageCount = 0; imageCount < totalImage; imageCount++) {
-                oneFeat[imageCount] = completeFeatures[imageCount][feaCount];
-            }
+            if (feaCount != 36432) {
+                if (feaCount != 72864) {
+                    if (feaCount != 96048) {
 
-            //Sorting features and extract pre sorting indices 
-            SortPlusIndex sortPlusIndex = new SortPlusIndex(oneFeat);
-            sortOneFeat = sortPlusIndex.getSortedArray();
-            sortInd = sortPlusIndex.getActualIndex();
+                        //Get required Feature from all images
+                        for (int imageCount = 0; imageCount < totalImage; imageCount++) {
+                            oneFeat[imageCount] = completeFeatures[imageCount][feaCount];
+                        }
 
-            //Sort image weights and labels according to indices extracted from above
-            for (int imageCount = 0; imageCount < totalImage; imageCount++) {
-                sortWeights[imageCount] = weights[sortInd[imageCount]];
-                sortLabels[imageCount] = labels[sortInd[imageCount]];
-            }
+                        //Sorting features and extract pre sorting indices 
+                        SortPlusIndex sortPlusIndex = new SortPlusIndex(oneFeat);
+                        sortOneFeat = sortPlusIndex.getSortedArray();
+                        sortInd = sortPlusIndex.getActualIndex();
 
-            //Cummulative sum of positive and negative image weights after sorting
-            CummulativeSummation cummulativeSummation = new CummulativeSummation(sortWeights, sortLabels, totalImage);
-            sPlus = cummulativeSummation.getSPlus();
-            sMinus = cummulativeSummation.getSMinus();
+//            for(int i = 0 ; i< totalImage ; i++){
+//                System.out.println("Sort one fea = " + sortOneFeat[i]);
+//            }
+                        //Sort image weights and labels according to indices extracted from above
+                        for (int imageCount = 0; imageCount < totalImage; imageCount++) {
+                            sortWeights[imageCount] = weights[sortInd[imageCount]];
+                            sortLabels[imageCount] = labels[sortInd[imageCount]];
+                        }
 
-            /**
-             * Calculate misclassifications and errors according to cumulative
-             * value such that it represents the error of that particular
-             * position value was taken as the classification threshold.
-             */
-            for (int imageCount = 0; imageCount < totalImage; imageCount++) {
-                errPlus[imageCount] = sPlus[imageCount] + (tMinus - sMinus[imageCount]);
-                errMinus[imageCount] = sMinus[imageCount] + (tPlus - sPlus[imageCount]);
-//                System.out.println("FeatCount "+ feaCount +"SPlus = " + sPlus[imageCount] + " SMinus" + sMinus[imageCount]);
-                if (errPlus[imageCount] < errMinus[imageCount]) {
-                    oneFeatErr[imageCount] = errPlus[imageCount];
-                } else {
-                    oneFeatErr[imageCount] = errMinus[imageCount];
-                }
-            }
+                        //Cummulative sum of positive and negative image weights after sorting
+                        CummulativeSummation cummulativeSummation = new CummulativeSummation(sortWeights, sortLabels, totalImage);
+                        sPlus = cummulativeSummation.getSPlus();
+                        sMinus = cummulativeSummation.getSMinus();
 
-            //Among all the error values narrow it down to a single minimum error value
-            float minOneFeatErr = oneFeatErr[0];
-            int minInd = 0;
-            for (int imageCount = 1; imageCount < totalImage; imageCount++) {
-                if (oneFeatErr[imageCount] < minOneFeatErr) {
-//                    if(oneFeatErr[imageCount] != 0){
-                        minOneFeatErr = oneFeatErr[imageCount];
-                        minInd = imageCount;
+                        /**
+                         * Calculate misclassifications and errors according to
+                         * cumulative value such that it represents the error of
+                         * that particular position value was taken as the
+                         * classification threshold.
+                         */
+                        for (int imageCount = 0; imageCount < totalImage; imageCount++) {
+                            errPlus[imageCount] = sPlus[imageCount] + (tMinus - sMinus[imageCount]);
+                            errMinus[imageCount] = sMinus[imageCount] + (tPlus - sPlus[imageCount]);
+//                System.out.println("Err Plus = " + errPlus[imageCount]);
+//                System.out.println("Err Minus = " + errMinus[imageCount]);
+                            if (errPlus[imageCount] < errMinus[imageCount]) {
+                                oneFeatErr[imageCount] = errPlus[imageCount];
+                            } else {
+                                oneFeatErr[imageCount] = errMinus[imageCount];
+                            }
+                        }
+
+                        //Among all the error values narrow it down to a single minimum error value
+//            System.out.println("0th index value = " + oneFeatErr[0]);
+//            float minOneFeatErr = oneFeatErr[5];
+//            int minInd = 5;
+                        for (int imageCount = 0; imageCount < totalImage; imageCount++) {
+                            if ((oneFeatErr[imageCount] < minOneFeatErr)) {
+//                    System.out.println("BHITRA Paila ko index" + minInd);
+//                    if (oneFeatErr[imageCount] != 0) {
+                                minOneFeatErr = oneFeatErr[imageCount];
+                                minInd = imageCount;
 //                    }
+//                    System.out.println("BHITRA Pachi ko index" + minInd);
+//                    System.out.println("");
+                            }
+                        }
+
+                        //Choose polarity and result value for the above choosen min error value
+                        if (errPlus[minInd] <= errMinus[minInd]) {
+                            polar = -1;
+                            for (int i = minInd; i < totalImage; i++) {
+                                result[i] = 1;
+                            }
+                            for (int j = 0; j < totalImage; j++) {
+                                result[sortInd[j]] = result[j];
+                            }
+                        } else {
+                            polar = 1;
+                            for (int i = 0; i < minInd; i++) {
+                                result[i] = 1;
+                            }
+                            for (int j = 0; j < totalImage; j++) {
+                                result[sortInd[j]] = result[j];
+                            }
+                        }
+
+                        //Defining weak clasifier parameters
+                        if (minOneFeatErr < minErr) {
+                            minErr = minOneFeatErr;
+                            if (minInd == 0) {
+                                threshold = (float) (sortOneFeat[0] - 0.5);
+                            } else if (minInd == (totalImage - 1)) {
+                                threshold = (float) (sortOneFeat[totalImage - 1] + 0.5);
+                            } else {
+                                System.out.println(minInd);
+                                threshold = (float) (0.5 * (sortOneFeat[minInd - 1] + sortOneFeat[minInd]));
+                                System.out.println("threshold 3rd" + threshold);
+                                System.out.println("Feanumber" + feaCount);
+                            }
+                            polarity = polar;
+                            featInd = feaCount;
+                            for (int i = 0; i < totalImage; i++) {
+                                bestResult[i] = result[i];
+                            }
+                        }
+//            System.out.println("threshold" + threshold);
+                    }
+//        System.out.println("threshold" + threshold);
                 }
             }
-
-            //Choose polarity and result value for the above choosen min error value
-            if (errPlus[minInd] <= errMinus[minInd]) {
-                polar = -1;
-                for (int i = minInd; i < totalImage; i++) {
-                    result[i] = 1;
-                }
-                for (int j = 0; j < totalImage; j++) {
-                    result[sortInd[j]] = result[j];
-                }
-            } else {
-                polar = 1;
-                for (int i = 0; i < minInd; i++) {
-                    result[i] = 1;
-                }
-                for (int j = 0; j < totalImage; j++) {
-                    result[sortInd[j]] = result[j];
-                }
-            }
-
-            //Defining weak clasifier parameters
-            if (minOneFeatErr < minErr) {
-                minErr = minOneFeatErr;
-                if (minInd == 0) {
-                    threshold = (float) (sortOneFeat[0] - 0.5);
-                } else if (minInd == (totalImage - 1)) {
-                    threshold = (float) (sortOneFeat[totalImage - 1] + 0.5);
-                } else {
-                    threshold =  (float) 0.5*(sortOneFeat[minInd-1] + sortOneFeat[minInd]);
-                }
-                polarity = polar;
-                featInd = feaCount;
-                for (int i = 0; i < totalImage; i++) {
-                    bestResult[i] = result[i];
-                }
-            }
-
         }
     }
 
