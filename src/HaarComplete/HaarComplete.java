@@ -40,6 +40,7 @@ public class HaarComplete {
         int testImagesNum = 2267;
         int totalImageNumber = testImagesNum + 1;
         int totalFeaturesNum = 113472;
+        int positiveImageNum = 1068;
 
         Features features = new Features();
         IntegralImage integralImage = new IntegralImage();
@@ -48,7 +49,12 @@ public class HaarComplete {
 
         for (int imageCount = 0; imageCount <= testImagesNum; imageCount++) {
             BufferedImage img = null;
-            img = ImageIO.read(new File("image/test" + (imageCount + 1) + ".png"));
+//            if(imageCount < 178){
+                img = ImageIO.read(new File("image/test" + (imageCount + 1) + ".png"));
+//            } else {
+//                img = ImageIO.read(new File("image/test" + (imageCount + 1+ 890) + ".png"));
+//            }
+            
 
             HistEq histEq = new HistEq();                                           //call histogram equilization
             img = histEq.Change(img);                                               //retreive equilized image
@@ -103,14 +109,14 @@ public class HaarComplete {
             }
 
         }
-        int[] indicesAll = new int[2268];
-        int[] labels = new int[2268];
-        for(int i = 0; i < 1068; i++){
+        int[] indicesAll = new int[totalImageNumber];
+        int[] labels = new int[totalImageNumber];
+        for(int i = 0; i < positiveImageNum; i++){
             indicesAll[i] = i;
             labels[i] = 1;
         }
         
-         for(int i = 1068; i < 2268; i++){
+         for(int i = positiveImageNum; i < totalImageNumber; i++){
             indicesAll[i] = i;
             labels[i] = 0;
         }

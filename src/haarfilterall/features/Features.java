@@ -56,7 +56,7 @@ public class Features {
                 }
             }
         }
-        System.out.println("Count feature A " + count);
+//        System.out.println("Count feature A " + count);
         FeatureNormalization featureNormalization = new FeatureNormalization();
         tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, max);
         return tempFeatureValues;
@@ -97,7 +97,7 @@ public class Features {
             }
         }
 
-        System.out.println("Count feature B " + count);
+//        System.out.println("Count feature B " + count);
         FeatureNormalization featureNormalization = new FeatureNormalization();
         tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, max);
         return tempFeatureValues;
@@ -132,7 +132,7 @@ public class Features {
                 }
             }
         }
-        System.out.println("Count feature C " + count);
+//        System.out.println("Count feature C " + count);
         FeatureNormalization featureNormalization = new FeatureNormalization();
         tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, max);
         return tempFeatureValues;
@@ -167,7 +167,7 @@ public class Features {
                 }
             }
         }
-        System.out.println("Count feature E " + count);
+//        System.out.println("Count feature E " + count);
         FeatureNormalization featureNormalization = new FeatureNormalization();
         tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, max);
         return tempFeatureValues;

@@ -6,6 +6,10 @@
 package StrongClassifier;
 import WeakClassifier.WeakLearner;
 import StrongClassifier.util.SortPlusIndex;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.Math;
 
 /**
@@ -31,6 +35,7 @@ public class StrongClassifier {
     private float[] falsePositiveRate;
     private float[][] completeFeatures;
     private int[] labels;
+    private String writeContent;
     
     public StrongClassifier(int CascadeIteration, float[][] completeFeatures,  int[] indicesAll, int stage,int[] labels){   
         this.mCascadeIteration = CascadeIteration;
@@ -47,8 +52,9 @@ public class StrongClassifier {
         this.alpha = new float[mCascadeIteration];
         this.truePositiveRate = new float[mCascadeIteration];
         this.falsePositiveRate = new float[mCascadeIteration];
+        this.writeContent = "";
         
-        initializeFeatures();
+        //initializeFeatures();
         initializeWeights(mTotalTrainSize);
     }
         
@@ -61,8 +67,10 @@ public class StrongClassifier {
         for(int i = 0; i < totalTrainSize;i++){
             if(i<mPositiveTrainSize){
                 imageWeight[i] = (float) (0.5/mPositiveTrainSize);
+//                System.out.println(imageWeight[i]);
             } else {
                 imageWeight[i] = (float) (0.5/mNegativeTrainSize);
+//                System.out.println(imageWeight[i]);
             }
         }
     }
@@ -73,6 +81,7 @@ public class StrongClassifier {
         
         for (int i = 0; i < weights.length;i++){
             normalizedWeight[i] = weights[i]/totalWeightSum;
+//            System.out.println(normalizedWeight[i]);
         }
         return normalizedWeight;
     }
@@ -87,10 +96,11 @@ public class StrongClassifier {
     
     public float[] updateWeights(float beta, float[] weights, int[] compareLabels){
         float temp;
+
         for(int i = 0; i< weights.length;i++){
-            temp = (float) Math.pow(beta,1-compareLabels[i]);                //ei = compareLabels
+            temp = (float) Math.pow((float) beta,1-compareLabels[i]);                //ei = compareLabels
             weights[i] = weights[i] * temp;
-        }
+        }   
         return weights;
     }
     
@@ -189,13 +199,6 @@ public class StrongClassifier {
         return mNextIndicesAll;       
     }
     
-    private int[] convertIntegerToInt(Integer[] negativeInd){
-        int[] integerToInt = new int[negativeInd.length];
-        for (int i = 0; i < negativeInd.length; i++){
-            integerToInt[i] = negativeInd[i];
-        }
-        return integerToInt;
-    }
     private int[] setNegativeInd(int[] negativeInd, int start){
         int[] retInd = new int[negativeInd.length - start];
         for (int i = 0; i < negativeInd.length - start; i++){
@@ -243,17 +246,16 @@ public class StrongClassifier {
             weakClassifier[0][t] = minError;
             weakClassifier[1][t] = polarity;
             weakClassifier[2][t] = threshold;
-            weakClassifier[3][t] = featureIndex;
+            weakClassifier[3][t] = featureIndex;        
             
-            System.out.println("Classifier " + t +" minError " + weakClassifier[0][t]
-            +" Polarity " + weakClassifier[1][t]
-            +" threshold " + weakClassifier[2][t]
-            +" featureIndex " + weakClassifier[3][t]);
             
             setHTResult(t,classifyResult);
             
             //Set beta Value
             beta = minError/(1 - minError);
+//            beta = (float) 0.5;
+            
+            System.out.println(minError + " " + beta);
             
             //Set ei for updatting weights
             int[] compareLabels = comparedLabels(labels,classifyResult);
@@ -263,6 +265,19 @@ public class StrongClassifier {
             
             //Set alpha for weak Classifier t
             alpha[t] = (float) (Math.log(1/beta));
+            
+             System.out.println("Classifier " + t +" minError " + weakClassifier[0][t]
+            +" Polarity " + weakClassifier[1][t]
+            +" threshold " + weakClassifier[2][t]
+            +" featureIndex " + weakClassifier[3][t]
+            +" alpha " + alpha[t]);
+            
+            String content = ("Classifier " + t +" minError " + weakClassifier[0][t]
+            +" Polarity " + weakClassifier[1][t]
+            +" threshold " + weakClassifier[2][t]
+            +" featureIndex " + weakClassifier[3][t] + " alpha " + alpha[t] +"\n");
+            
+            writeContent += content;
             
             //strongLearner
             float[] strLearner = strongLearner(t);
@@ -280,14 +295,21 @@ public class StrongClassifier {
             }      
         }
         
+        try {
+                FileWriter writer = new FileWriter(new File("Classifier.txt"));
+                writer.write(writeContent);
+                writer.close();
+        } catch (IOException e) {
+        }
+        
         //Use SortPlusIndex of StrongClassifier.util
         SortPlusIndex sortPlusIndex = new SortPlusIndex(strLearner_result);
         int[] temp = sortPlusIndex.getSortedArray();
-        Integer[] nextNegativeInd = sortPlusIndex.getActualIndex();
-        int[] nextNegativeIndex = convertIntegerToInt(nextNegativeInd);
+        int[] nextNegativeIndex = sortPlusIndex.getActualIndex();
+//        int[] nextNegativeIndex = convertIntegerToInt(nextNegativeInd);
         
         for(int i = 0; i < mNegativeTrainSize; i++){
-            if (nextNegativeInd[i] > 0){
+            if (nextNegativeIndex[i] > 0){
                 //need to set nextNegIndex
                 nextNegativeIndex = setNegativeInd(nextNegativeIndex,i);
                 break;

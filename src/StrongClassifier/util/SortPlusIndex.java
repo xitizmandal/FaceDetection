@@ -15,6 +15,7 @@ public class SortPlusIndex {
 
     private Integer[] indexes;
     private int[] sortedArray;
+    private int[] integerToInt;
 
     public SortPlusIndex(int[] strLearner_result) {
         sortedArray = new int[strLearner_result.length];
@@ -23,13 +24,22 @@ public class SortPlusIndex {
         indexes = comparator.createIndexArray();
         Arrays.sort(indexes, comparator);
         Arrays.sort(sortedArray);
+        this.integerToInt = convertIntegerToInt(indexes);
     }
 
     public int[] getSortedArray() {
         return this.sortedArray;
     }
 
-    public Integer[] getActualIndex() {
-        return this.indexes;
+    public int[] getActualIndex() {
+        return this.integerToInt;
+    }
+    
+    private int[] convertIntegerToInt(Integer[] negativeInd){
+        int[] integerToInt = new int[negativeInd.length];
+        for (int i = 0; i < negativeInd.length; i++){
+            integerToInt[i] = negativeInd[i];
+        }
+        return integerToInt;
     }
 }

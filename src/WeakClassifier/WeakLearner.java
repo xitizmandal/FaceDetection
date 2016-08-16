@@ -77,7 +77,8 @@ public class WeakLearner {
              */
             for (int imageCount = 0; imageCount < totalImage; imageCount++) {
                 errPlus[imageCount] = sPlus[imageCount] + (tMinus - sMinus[imageCount]);
-                errMinus[imageCount] = sMinus[imageCount] + (tPlus - sMinus[imageCount]);
+                errMinus[imageCount] = sMinus[imageCount] + (tPlus - sPlus[imageCount]);
+//                System.out.println("FeatCount "+ feaCount +"SPlus = " + sPlus[imageCount] + " SMinus" + sMinus[imageCount]);
                 if (errPlus[imageCount] < errMinus[imageCount]) {
                     oneFeatErr[imageCount] = errPlus[imageCount];
                 } else {
@@ -90,8 +91,10 @@ public class WeakLearner {
             int minInd = 0;
             for (int imageCount = 1; imageCount < totalImage; imageCount++) {
                 if (oneFeatErr[imageCount] < minOneFeatErr) {
-                    minOneFeatErr = oneFeatErr[imageCount];
-                    minInd = imageCount;
+//                    if(oneFeatErr[imageCount] != 0){
+                        minOneFeatErr = oneFeatErr[imageCount];
+                        minInd = imageCount;
+//                    }
                 }
             }
 
@@ -122,7 +125,7 @@ public class WeakLearner {
                 } else if (minInd == (totalImage - 1)) {
                     threshold = (float) (sortOneFeat[totalImage - 1] + 0.5);
                 } else {
-                    threshold = (sortOneFeat[minInd-1] + sortOneFeat[minInd]) / 2;
+                    threshold =  (float) 0.5*(sortOneFeat[minInd-1] + sortOneFeat[minInd]);
                 }
                 polarity = polar;
                 featInd = feaCount;
