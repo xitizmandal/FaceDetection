@@ -113,7 +113,7 @@ public class FaceDetection {
     public void startDetection() {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("testImages/test.png"));
+            img = ImageIO.read(new File("testImages/test3.png"));
             System.out.println(img.getHeight() + " " + img.getWidth());
         } catch (Exception e) {
         }
