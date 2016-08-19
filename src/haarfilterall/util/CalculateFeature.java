@@ -37,8 +37,6 @@ public class CalculateFeature {
         blackPortion = calculateArea.PointsCalculation(a, b, c + winWidth, d, intValues);
 
         featureValues = blackPortion - whitePortion;
-//        System.out.println(" ");
-//        System.out.println("FEATURE VALUE = " + featureValues);
 
         /**
          * Ultimately another portion will be chosen with respect to the above

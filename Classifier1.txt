@@ -1,6 +1,0 @@
-Classifier 0 minError 0.114997685 Polarity 1.0 threshold -0.4834336 featureIndex 86804.0 alpha 2.0406783
-Classifier 1 minError 0.19491738 Polarity 1.0 threshold -0.17540586 featureIndex 106750.0 alpha 1.418369
-Classifier 2 minError 0.22602877 Polarity -1.0 threshold 0.14879242 featureIndex 100982.0 alpha 1.2308724
-Classifier 3 minError 0.20240119 Polarity -1.0 threshold 0.030187074 featureIndex 9576.0 alpha 1.371354
-Classifier 4 minError 0.21452452 Polarity -1.0 threshold 0.14558549 featureIndex 45885.0 alpha 1.2978652
-Classifier 5 minError 0.20681232 Polarity 1.0 threshold -0.14034668 featureIndex 43968.0 alpha 1.3442482

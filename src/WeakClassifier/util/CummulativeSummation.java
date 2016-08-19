@@ -39,14 +39,4 @@ public class CummulativeSummation {
     public float[] getSMinus() {
         return this.sMinus;
     }
-
-//    public float[] CumSum (float[] toSum, int imageCount){
-//        float[] cumSum = new float [imageCount];
-//        cumSum[0] = toSum[0];
-//        for(int i = 1 ; i< imageCount ; i++){
-//            cumSum[i] = cumSum[i-1] + toSum[i];  
-//        }
-//        
-//        return cumSum;
-//    }
 }

@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>IPOL Journal · An Analysis of the Viola-Jones Face Detection Algorithm</title>
+
+<meta name="language" content="en">
+
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+
+<link rel="stylesheet" href="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/style.css" type="text/css">
+<link rel="stylesheet" href="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/local.css" type="text/css">
+
+<script src="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/piwik.js" async="" defer="defer" type="text/javascript"></script><script src="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/jwplayer.js" type="text/javascript"></script>
+
+<meta name="author" content="Yi-Qing Wang">
+<meta name="description" content="In this article, we decipher the Viola-Jones algorithm, the first ever real-time face detection
+system. There are three ingredients working in concert to enable a fast and accurate detection:
+the integral image for feature computation, Adaboost for feature selection and an attentional
+cascade for efficient computational resource allocation. Here we propose a complete algorithmic
+description, a learning code and a learned face detector that can be applied to any color image.
+Since the Viola-Jones algorithm typically gives multiple detections, a post-processing step is
+also proposed to reduce detection redundancy using a robustness argument.">
+<meta name="date" content="2014-06-26">
+<meta name="keywords" content="face detection ViolaJones algorithm integral image Adaboost">
+<link rel="bookmark" href="http://dx.doi.org/10.5201/ipol.2014.104">
+<meta name="citation_title" content="An Analysis of the Viola-Jones Face Detection Algorithm">
+<meta name="citation_author" content="Yi-Qing Wang">
+<meta name="citation_date" content="2014/06/26">
+<meta name="citation_journal_title" content="Image Processing On Line">
+<meta name="citation_issn" content="2105-1232">
+<meta name="citation_volume" content="4">
+<meta name="citation_firstpage" content="128">
+<meta name="citation_lastpage" content="148">
+<meta name="citation_doi" content="10.5201/ipol.2014.104">
+<meta name="citation_language" content="en">
+<meta name="citation_keywords" content="face detection; Viola-Jones algorithm; integral image; Adaboost">
+<meta name="citation_description" content="In this article, we decipher the Viola-Jones algorithm, the first ever real-time face detection
+system. There are three ingredients working in concert to enable a fast and accurate detection:
+the integral image for feature computation, Adaboost for feature selection and an attentional
+cascade for efficient computational resource allocation. Here we propose a complete algorithmic
+description, a learning code and a learned face detector that can be applied to any color image.
+Since the Viola-Jones algorithm typically gives multiple detections, a post-processing step is
+also proposed to reduce detection redundancy using a robustness argument.">
+<meta name="citation_abstract_html_url" content="http://www.ipol.im/pub/art/2014/104">
+<meta name="citation_pdf_url" content="http://www.ipol.im/pub/art/2014/104/article.pdf">
+<meta name="citation_pdf_url" content="http://www.ipol.im/pub/art/2014/104/article_lr.pdf">
+<meta name="DC.Title=&quot;An" content="">
+<meta name="DC.Creator.PersonalName=&quot;Yi-Qing" content="">
+<meta name="DC.Date.Created=&quot;2014-06-26&quot;" content="">
+<meta name="DC.Issued=&quot;2014/06/26&quot;" content="">
+<meta name="DC.IsPartOf=&quot;Image" content="">
+<meta name="DC.IsPartOf.ISSN=&quot;2105-1232&quot;" content="">
+<meta name="DC.IsPartOf.URI=&quot;http://www.ipol.im/&quot;" content="">
+<meta name="DC.IsPartOf.DOI=&quot;10.5201/ipol&quot;" content="">
+<meta name="DC.Source=&quot;Image" content="">
+<meta name="DC.Source.ISSN=&quot;2105-1232&quot;" content="">
+<meta name="DC.Source.URI=&quot;http://www.ipol.im/&quot;" content="">
+<meta name="DC.Source.DOI=&quot;10.5201/ipol&quot;" content="">
+<meta name="DC.Source.Volume=&quot;4&quot;" content="">
+<meta name="DC.Source.Volume.URI=&quot;http://www.ipol.im/pub/art/2014&quot;" content="">
+<meta name="DC.Source.Volume.DOI=&quot;10.5201/ipol.2014&quot;" content="">
+<meta name="DC.Source.StartPage=&quot;128&quot;" content="">
+<meta name="DC.Source.EndPage=&quot;148&quot;" content="">
+<meta name="DC.Identifier=&quot;ipol.2014.104&quot;" content="">
+<meta name="DC.Identifier.DOI=&quot;10.5201/ipol.2014.104&quot;" content="">
+<meta name="DC.Identifier.URI=&quot;http://www.ipol.im/pub/art/2014/104&quot;" content="">
+<meta name="DC.Identifier.URI=&quot;http://www.ipol.im/pub/art/2014/104/article.pdf&quot;" content="">
+<meta name="DC.Identifier.URI=&quot;http://www.ipol.im/pub/art/2014/104/article_lr.pdf&quot;" content="">
+<meta name="DC.Format=&quot;application/pdf&quot;" content="">
+<meta name="DC.Language=&quot;en&quot;" content="">
+<meta name="DC.Rights=&quot;see" content="">
+<meta name="DC.Subject=&quot;face" content="">
+<meta name="DC.Description=&quot;&quot;&quot;In" content="">
+<meta name="DC.Type=&quot;Text.Serial.Journal&quot;" content="">
+<meta name="DC.Type.ArticleType=&quot;Articles&quot;" content="">
+
+
+
+<link rel="icon" href="http://www.ipol.im/favicon.ico" type="image/x-icon">
+<link rel="icon" href="http://www.ipol.im/favicon.png" type="image/png">
+
+</head>
+<body>
+
+<div class="pageheader">
+  <div id="header">
+    <div id="motto">
+      <a href="http://www.ipol.im/">
+        <img src="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/IPOL-header-logo.png" alt="IPOL" height="64" width="50">
+	IPOL Journal · Image Processing On Line
+      </a>
+    </div> <!-- #motto -->
+    <div id="menu" class="noprint">
+      <form action="http://www.google.com/cse" id="search">
+	<ul>
+	  <li><a href="http://www.ipol.im/">HOME</a></li>
+	  <li><a href="http://www.ipol.im/meta/">ABOUT</a></li>
+	  <li><a href="http://www.ipol.im/pub/art/">ARTICLES</a></li>
+	  <li><a href="http://www.ipol.im/pub/pre/">PREPRINTS</a></li>
+	  <li><a href="http://dev.ipol.im/ws/">WORKSHOPS</a></li>
+	  <li><a href="http://www.ipol.im/news/">NEWS</a></li>
+	  <li class="search">
+	    <input name="cx" value="016691498998454533855:WMX-109950614" type="hidden">
+	    <input name="ie" value="UTF-8" type="hidden">
+	    <input value="SEARCH" type="submit">
+	    <input name="q" size="16" id="searchbox" type="text">
+	  </li>
+	</ul>
+      </form>
+    </div> <!-- #menu -->
+  </div> <!-- #header -->
+</div> <!-- .pageheader -->
+
+
+<div id="main">
+<div id="pagetitle">
+An Analysis of the Viola-Jones Face Detection Algorithm
+</div> <!-- #pagetitle -->
+<div id="content">
+
+
+<!-- google scholar metadata -->
+
+
+
+
+<!-- DCMI metadata -->
+
+
+
+
+<!-- CrossRef 2xml input -->
+
+
+<!-- TODO: build from HTML parser -->
+
+
+<!--
+2xml:/doi_batch/body/journal/!= ==============
+2xml:/doi_batch/body/journal/journal_article/@publication_type=full_text
+2xml:/doi_batch/body/journal/journal_article/titles/title=An Analysis of the Viola-Jones Face Detection Algorithm
+2xml:/doi_batch/body/journal/journal_article/contributors/person_name/@contributor_role=author
+2xml:/doi_batch/body/journal/journal_article/contributors/person_name/@sequence=first
+2xml:/doi_batch/body/journal/journal_article/contributors/person_name/given_name=Yi-Qing
+2xml:/doi_batch/body/journal/journal_article/contributors/person_name/surname=Wang
+2xml:/doi_batch/body/journal/journal_article/publication_date/@media_type=online
+2xml:/doi_batch/body/journal/journal_article/publication_date/month=06
+2xml:/doi_batch/body/journal/journal_article/publication_date/day=26
+2xml:/doi_batch/body/journal/journal_article/publication_date/year=2014
+2xml:/doi_batch/body/journal/journal_article/pages/first_page=128
+2xml:/doi_batch/body/journal/journal_article/pages/last_page=148
+2xml:/doi_batch/body/journal/journal_article/doi_data/doi=10.5201/ipol.2014.104
+2xml:/doi_batch/body/journal/journal_article/doi_data/resource=http://www.ipol.im/pub/art/2014/104?utm_source=doi
+-->
+
+
+
+
+<div id="pageauthor">
+Yi-Qing Wang
+</div>
+
+
+
+
+<ul id="xlinks" class="noprint, article" style="padding-left: 2em; margin-left:-2em;
+  padding-right:1000em; margin-right:-1000em">
+  <li class="article"><a href="http://www.ipol.im/pub/art/2014/104/">article</a></li>
+  <li class="demo"><a href="http://demo.ipol.im/demo/104">demo</a></li>
+  <li class="archive"><a href="http://demo.ipol.im/demo/104/archive">archive</a></li>
+  
+  
+</ul>
+
+
+
+
+<div id="status" class="published" style="padding-left: 2em; margin-left:-2em;
+  padding-right:1000em; margin-right:-1000em">
+  <div class="biblio">
+    <div class="bibtex">→ BibTeX
+      <pre>@article{ipol.2014.104,
+    title   = {{An Analysis of the Viola-Jones Face Detection Algorithm}},
+    author  = {Wang, Yi-Qing},
+    journal = {{Image Processing On Line}},
+    volume  = {4},
+    pages   = {128--148},
+    year    = {2014},
+    doi     = {10.5201/ipol.2014.104},
+}
+% if your bibliography style doesn't support doi fields:
+    note    = {\url{http://dx.doi.org/10.5201/ipol.2014.104}}</pre>
+    </div>
+    <dl>
+      <dt>published</dt>
+      <dd>2014-06-26 </dd>
+      <dt>reference</dt>
+      <dd><span style="font-variant: small-caps">Yi-Qing Wang</span>,
+      <span style="font-style: italic">An Analysis of the Viola-Jones Face Detection Algorithm</span>,
+      <a href="http://dx.doi.org/10.5201/ipol">Image Processing On Line</a>, 
+      <a href="http://dx.doi.org/10.5201/ipol.2014">4</a>&nbsp;(2014),
+      pp.&nbsp;128–148.
+      <a href="http://dx.doi.org/10.5201/ipol.2014.104">http://dx.doi.org/10.5201/ipol.2014.104</a></dd>
+    </dl>
+  </div>
+</div>
+
+
+
+
+<p>
+
+<em>Communicated by</em> Jose-Luis Lisani<br>
+
+
+<em>Demo edited by</em> Yi-Qing Wang
+
+</p>
+
+
+
+
+<h2>Abstract</h2>
+
+
+
+
+<p>In this article, we decipher the Viola-Jones algorithm, the first ever real-time face detection
+system. There are three ingredients working in concert to enable a fast and accurate detection:
+the integral image for feature computation, Adaboost for feature selection and an attentional
+cascade for efficient computational resource allocation. Here we propose a complete algorithmic
+description, a learning code and a learned face detector that can be applied to any color image.
+Since the Viola-Jones algorithm typically gives multiple detections, a post-processing step is
+also proposed to reduce detection redundancy using a robustness argument.</p>
+
+
+
+
+<h2>Download</h2>
+
+
+<ul>
+<li>full text manuscript:
+
+<a href="http://www.ipol.im/pub/art/2014/104/article_lr.pdf" title="low resolution, small file,
+for computer screen visualization">PDF low-res.
+(433K)</a> 
+<a href="http://www.ipol.im/pub/art/2014/104/article.pdf" title="full resolution, large file,
+for print/zoom/edition">PDF
+(6M)</a>
+<small><sup><a href="http://www.ipol.im/meta/faq/#pdfres" title="multiple PDF version information">[?]</a></sup></small>
+
+</li>
+<li>source code:
+<a href="http://www.ipol.im/pub/art/2014/104/vj_20140328.tar.gz">TAR/GZ</a>
+
+
+</li>
+</ul>
+
+
+
+
+<div id="preview-jsonly" style="display: block;">
+<h2>Preview</h2>
+<span style="font-size:75%">
+Loading takes a few seconds. 
+Images and graphics are degraded here for faster
+rendering. See the downloadable PDF documents for original high-quality
+versions.</span> 
+<iframe style="height: 1298.14px;" id="pdfviewer" src="http://docs.google.com/viewer?url=http://www.ipol.im/pub/art/2014/104/article_lr.pdf&amp;embedded=true">Preview not available in your browser.</iframe>
+</div>
+
+
+<script type="text/javascript">
+    document.getElementById('preview-jsonly').style.display='block'; // show the preview 
+    function resize_pdfviewer() { // maintain the aspect-ratio
+        var el = document.getElementById('pdfviewer');
+        el.style.height =  (el.offsetWidth * 1.37 + 35) + "px";
+    }
+    window.onload = resize_pdfviewer;
+    window.onresize = resize_pdfviewer;
+</script>
+
+
+
+
+</div> <!-- #content -->
+</div><!-- #main -->
+
+
+<div class="pagefooter">
+<div id="footer">
+<ul class="noprint">
+<li><a href="http://www.ipol.im/meta/feeds/">feeds &amp; twitter</a></li>
+<li><a href="http://www.ipol.im/meta/sitemap/" rel="sitemap">sitemap</a></li>
+<li><a href="http://www.ipol.im/meta/contact/">contact</a></li>
+<li><a href="http://www.ipol.im/meta/privacy/">privacy policy</a></li>
+<li>ISSN:&nbsp;<a href="http://www.worldcat.org/issn/2105-1232">2105-1232</a></li>
+<li>DOI:&nbsp;<a href="http://dx.doi.org/10.5201/ipol">10.5201/ipol</a></li>
+</ul><br>
+<ul>
+IPOL and its contributors acknowledge support from September 2010 to  August 2015 by
+ the European Research Council (advanced grant Twelve Labours n°246961).
+</ul><br>
+<ul>
+IPOL is also supported by ONR grant N00014-14-1-0023,  CNES (MISS 
+project),   FUI 18 Plein Phare project, and   ANR-DGA  project 
+ANR-12-ASTR-0035.
+</ul><br>
+<ul>
+IPOL is maintained by <a href="http://www.cmla.ens-cachan.fr/">CMLA</a>, <a href="http://www.ens-cachan.fr/">ENS Cachan</a>
+<li> <a href="http://dmi.uib.es/">DMI</a>, <a href="http://www.uib.es/">Universitat de les Illes Balears</a></li> 
+<li> <a href="http://www.fing.edu.uy/">Fing</a>, <a href="http://www.universidad.edu.uy/">Universidad de la República</a></li>
+</ul><br>
+<ul>
+<li><a href="http://www.ipol.im/meta/copyright/" rel="copyright">©&nbsp;2009-2016,
+    IPOL Image Processing On Line &amp; the authors&nbsp;<img src="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/open-access.png" alt="Open Access">&nbsp;<img src="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/open-source.png" alt="Open Source">&nbsp;<img src="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/open-data.png" alt="Open Data">&nbsp;<img src="IPOL%20Journal%20%C2%B7%20An%20Analysis%20of%20the%20Viola-Jones%20Face%20Detection%20Algorithm_files/ipol.png" alt="IPOL"></a></li>
+</ul>
+</div><!-- #footer -->
+</div><!-- .pagefooter -->
+
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDomains", ["www.ipol.im","demo.ipol.im"]]);
+  _paq.push(["setCustomVariable", 1, "Type", "www", "page"]);
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+  if ("www.ipol.im" == window.location.hostname) {
+    (function() {
+      var u="http://tools.ipol.im/piwik/";
+      _paq.push(["setTrackerUrl", u+"piwik.php"]);
+      _paq.push(["setSiteId", "7"]);
+      var d=document, g=d.createElement("script"),
+      s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+      g.defer=true; g.async=true; g.src=u+"piwik.js";
+      s.parentNode.insertBefore(g,s);
+    })();
+  }
+</script>
+<noscript>
+  <p><img src="http://tools.ipol.im/piwik/piwik.php?idsite=7&amp;rec=1&idGoal=8" style="border:0" alt="" /></p>
+</noscript>
+
+
+
+
+</body></html>

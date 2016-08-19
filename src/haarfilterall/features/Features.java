@@ -44,22 +44,19 @@ public class Features {
                          * reduces the computation time
                          */
                         tempFeature = calculateFeature.CalculateSubtractionA(i, j, x, y, count, intValues);
-                        
+
                         featureValues[count] = tempFeature;
                         absValue = Math.abs(tempFeature);
                         if (absValue > max) {
                             max = absValue;
                         }
                         count++;
-//                        System.out.println("Feature[" + count + "] = " + tempFeature);
-//                        }
                     }
                 }
             }
         }
-//        System.out.println("Count feature A " + count);
         FeatureNormalization featureNormalization = new FeatureNormalization();
-        tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, max);
+        tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, 1);
         return tempFeatureValues;
     }
 
@@ -87,7 +84,7 @@ public class Features {
                 for (int x = 2; x <= (imgH - i * h + 1); x++) {
                     for (int y = 2; y <= imgW - j * w + 1; y++) {
                         tempFeature = calculateFeature.CalculateSubtractionB(j, i, y, x, count, intValues);
-                        
+
                         featureValues[count] = tempFeature;
                         absValue = Math.abs(tempFeature);
                         if (absValue > max) {
@@ -98,10 +95,8 @@ public class Features {
                 }
             }
         }
-
-//        System.out.println("Count feature B " + count);
         FeatureNormalization featureNormalization = new FeatureNormalization();
-        tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, max);
+        tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, 1);
         return tempFeatureValues;
     }
 
@@ -124,7 +119,7 @@ public class Features {
                 for (int x = 2; x <= (imgW - i * w + 1); x++) {
                     for (int y = 2; y <= imgH - j * h + 1; y++) {
                         tempFeature = calculateFeature.CalculateSubtractionC(i, j, x, y, count, intValues);
-                        
+
                         featureValues[count] = tempFeature;
                         absValue = Math.abs(tempFeature);
                         if (absValue > max) {
@@ -135,9 +130,8 @@ public class Features {
                 }
             }
         }
-//        System.out.println("Count feature C " + count);
         FeatureNormalization featureNormalization = new FeatureNormalization();
-        tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, max);
+        tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, 1);
         return tempFeatureValues;
     }
 
@@ -160,7 +154,7 @@ public class Features {
                 for (int x = 2; x <= (imgW - i * w + 1); x++) {
                     for (int y = 2; y <= imgH - j * h + 1; y++) {
                         tempFeature = calculateFeature.CalculateSubtractionE(i, j, x, y, count, intValues);
-                        
+
                         featureValues[count] = tempFeature;
                         absValue = Math.abs(tempFeature);
                         if (absValue > max) {
@@ -171,9 +165,8 @@ public class Features {
                 }
             }
         }
-//        System.out.println("Count feature E " + count);
         FeatureNormalization featureNormalization = new FeatureNormalization();
-        tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, max);
+        tempFeatureValues = featureNormalization.FeaNormal(featureValues, count, 1);
         return tempFeatureValues;
     }
 }

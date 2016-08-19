@@ -62,7 +62,6 @@ public class DataReader {
         } catch (IOException e) {
             System.out.println("File Read Error");
         }
-        System.out.println(numberOfLines);
         return numberOfLines;
     }
 

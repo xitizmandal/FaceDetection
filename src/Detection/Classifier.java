@@ -21,28 +21,28 @@ public class Classifier {
         this.mPolarity = polarity;
         this.mThreshold = threshold;
     }
-    
-    public void setFeatures(double[] features){
+
+    public void setFeatures(double[] features) {
         this.mFeatures = features;
     }
-    
-    private int weakClassifierFunction(double featureValue, int polarity, double threshold){
-        if((featureValue*polarity) < (threshold*polarity)){
+
+    private int weakClassifierFunction(double featureValue, int polarity, double threshold) {
+        if ((featureValue * polarity) < (threshold * polarity)) {
             return 1;
         } else {
             return 0;
         }
     }
-    
-    public int strongClassifierFunction(){
+
+    public int strongClassifierFunction() {
         double functionSum = 0;
         double alphaSum = 0;
-        for(int i = 0; i < mAlpha.length; i++){
+        for (int i = 0; i < mAlpha.length; i++) {
             functionSum += (mAlpha[i] * weakClassifierFunction(mFeatures[i], mPolarity[i], mThreshold[i]));
             alphaSum += mAlpha[i];
         }
-        
-        if (functionSum >= (0.5 * alphaSum)){
+
+        if (functionSum >= (0.5 * alphaSum)) {
             return 1;
         } else {
             return 0;

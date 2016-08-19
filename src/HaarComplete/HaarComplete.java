@@ -29,7 +29,7 @@ public class HaarComplete {
      * @throws java.lang.InterruptedException
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-        FaceDetection faceDetection = new FaceDetection();
+       
 
        /* float[] twoHoriFea = new float[36432];
         float[] twoVertFea = new float[36432];
@@ -139,6 +139,8 @@ public class HaarComplete {
             }
         }*/
 //        System.out.println("IMAGE NUMBER = " + count);
+        
+        FaceDetection faceDetection = new FaceDetection();
     }
 
 }

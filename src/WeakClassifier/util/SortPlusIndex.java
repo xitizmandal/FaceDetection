@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author Kshitiz Mandal
+ * @author xitiz
  */
 public class SortPlusIndex {
 
@@ -34,10 +34,10 @@ public class SortPlusIndex {
     public int[] getActualIndex() {
         return this.intIndexes;
     }
-    
-    private int [] ConvertIntegerToInt (Integer [] actualIndex){
+
+    private int[] ConvertIntegerToInt(Integer[] actualIndex) {
         int[] toInt = new int[actualIndex.length];
-        for(int i = 0; i < actualIndex.length; i++){
+        for (int i = 0; i < actualIndex.length; i++) {
             toInt[i] = actualIndex[i];
         }
         return toInt;

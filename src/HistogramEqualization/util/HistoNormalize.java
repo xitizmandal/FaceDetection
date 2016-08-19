@@ -19,7 +19,7 @@ public class HistoNormalize {
         int numBands = bi.getRaster().getNumBands();
         int[] iarray = new int[numBands];
         float[] farray = new float[numBands];
-//        String content = "";
+
         int count = 0;
         int height = bi.getHeight();
         int width = bi.getWidth();

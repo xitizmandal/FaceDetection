@@ -57,12 +57,7 @@ public class StrongClassifier {
         this.falsePositiveRate = new float[mCascadeIteration];
         this.writeContent = "";
 
-        //initializeFeatures();
         initializeWeights(mTotalTrainSize);
-    }
-
-    private void initializeFeatures() {
-
     }
 
     private void initializeWeights(int totalTrainSize) {
@@ -70,10 +65,8 @@ public class StrongClassifier {
         for (int i = 0; i < totalTrainSize; i++) {
             if (i < mPositiveTrainSize) {
                 imageWeight[i] = (float) (0.5 / mPositiveTrainSize);
-//                System.out.println(imageWeight[i]);
             } else {
                 imageWeight[i] = (float) (0.5 / mNegativeTrainSize);
-//                System.out.println(imageWeight[i]);
             }
         }
     }
@@ -84,7 +77,6 @@ public class StrongClassifier {
 
         for (int i = 0; i < weights.length; i++) {
             normalizedWeight[i] = weights[i] / totalWeightSum;
-//            System.out.println(normalizedWeight[i]);
         }
         return normalizedWeight;
     }
@@ -115,13 +107,11 @@ public class StrongClassifier {
 
     //Matrix Multiplication.
     public float[] strongLearner(int t) {
-//        System.out.println("Print gareko : " +ht_result.length);
         float[] strLearner = new float[ht_result.length];
         float sum = 0;
         for (int i = 0; i < ht_result.length; i++) {
             for (int j = 0; j < (t + 1); j++) {
                 sum += ht_result[i][j] * alpha[j];
-//                System.out.println( i + "_"+j+"ht_result: "+ht_result[i][j]+" alpha: "+alpha[j]+" sum: "+sum);
             }
             strLearner[i] = sum;
             sum = 0;
@@ -138,9 +128,8 @@ public class StrongClassifier {
     public float getMinimumValue(float[] values) {
         float minimumValue = 9999999;                 //max value of threshold cannot be greater than total number of images
         for (int i = 0; i < values.length; i++) {
-            if (values[i] < minimumValue ) {
+            if (values[i] < minimumValue) {
                 minimumValue = values[i];
-//                System.out.println(minimumValue + " " + i);
             }
         }
         return minimumValue;
@@ -165,7 +154,6 @@ public class StrongClassifier {
     }
 
     //For sorting negative test images only
-    //Not needed
     public int[] sortStrongListener() {
         int tempIndex = strLearner_result.length - mPositiveTrainSize;
         int[] temp = new int[tempIndex];
@@ -207,7 +195,6 @@ public class StrongClassifier {
 
     private int[] setNegativeInd(int[] negativeInd, int start) {
         int[] retInd = new int[negativeInd.length - start];
-//        System.out.println(negativeInd.length);
         for (int i = 0; i < negativeInd.length - start; i++) {
             retInd[i] = negativeInd[start];
             start++;
@@ -263,7 +250,6 @@ public class StrongClassifier {
             threshold = weakLearner.getThreshold();
             featureIndex = weakLearner.getFeatInd();
             classifyResult = weakLearner.getBestResult();
-//            classifyResult = weakClassifier[4][t];
 
             weakClassifier[0][t] = minError;
             weakClassifier[1][t] = polarity;
@@ -274,9 +260,7 @@ public class StrongClassifier {
 
             //Set beta Value
             beta = minError / (1 - minError);
-//            beta = (float) 0.5;
 
-//            System.out.println(minError + " " + beta);
             //Set ei for updatting weights
             int[] compareLabels = comparedLabels(labels, classifyResult);
 
@@ -307,7 +291,6 @@ public class StrongClassifier {
             float[] thresholdVal = getThresholdRange(strLearner);
 
             float thresholdStrong = getMinimumValue(thresholdVal);
-//            System.out.println(thresholdStrong);
 
             setStrLearnerResult(strLearner, thresholdStrong);
 
@@ -334,14 +317,11 @@ public class StrongClassifier {
 
         int[] nextNegativeIndex = (sortPlusIndex.getActualIndex());         //setIndex function may be used.
 
-//        int[] nextNegativeIndex = convertIntegerToInt(nextNegativeInd);
-//        int[] finalNegativeIndex = new int[mNegativeTrainSize];
         int neededSize = 0;
         for (int i = 0; i < mNegativeTrainSize; i++) {
             if (temp[i] > 0) {
                 //need to set nextNegIndex              
                 neededSize = mNegativeTrainSize - i;
-//                System.out.println(neededSize);
                 nextNegativeIndex = setNegativeInd(nextNegativeIndex, i);
                 break;
             }
