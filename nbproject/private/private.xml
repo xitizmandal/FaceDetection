@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/Detection/FaceDetection.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/Detection/Classifier.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/HaarComplete/HaarComplete.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/haarfilterall/features/Features.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/Detection/util/DataReader.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/WeakClassifier/WeakLearner.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/Detection/util/TestFeatures.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/StrongClassifier/StrongClassifier.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/StrongClassifier/util/SortPlusIndex.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/CustomDataStructure/ClassifierData.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/haarfilterall/util/CalculateArea.java</file>
+        </group>
+    </open-files>
+</project-private>

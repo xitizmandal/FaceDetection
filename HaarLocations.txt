@@ -1,0 +1,112 @@
+Feature C
+4,13,2,6
+Feature B
+5,3,8,6
+Feature B
+13,3,2,3
+Feature A
+4,19,6,3
+Feature B
+19,3,18,2
+Feature B
+7,3,12,3
+Feature E
+4,5,3,13
+Feature B
+1,1,7,2
+Feature E
+2,7,18,2
+Feature A
+1,1,13,6
+Feature C
+4,13,2,6
+Feature B
+4,3,8,6
+Feature B
+11,3,2,4
+Feature A
+3,21,7,4
+Feature B
+3,3,18,12
+Feature E
+3,6,17,11
+Feature E
+4,3,2,16
+Feature B
+9,3,12,2
+Feature B
+1,1,7,2
+Feature C
+3,12,4,7
+Feature B
+3,3,8,6
+Feature B
+13,3,2,2
+Feature A
+3,16,7,4
+Feature B
+7,2,19,9
+Feature A
+5,6,14,9
+Feature E
+4,4,2,16
+Feature B
+9,4,11,2
+Feature B
+1,1,5,3
+Feature A
+1,1,19,4
+Feature B
+8,3,19,7
+Feature B
+4,5,3,2
+Feature A
+3,15,7,5
+Feature B
+9,3,12,2
+Feature B
+17,3,18,2
+Feature C
+6,18,6,3
+Feature E
+4,3,2,16
+Feature B
+9,3,12,2
+Feature A
+2,1,8,8
+Feature B
+15,3,19,2
+Feature E
+4,3,3,5
+Feature A
+2,2,8,17
+Feature C
+5,3,7,6
+Feature B
+11,2,3,3
+Feature B
+1,1,7,22
+Feature C
+3,20,16,2
+Feature E
+4,3,2,16
+Feature C
+7,23,4,2
+Feature A
+2,6,8,4
+Feature E
+8,7,3,10
+Feature A
+1,1,22,14
+Feature C
+5,22,6,3
+Feature B
+4,2,9,6
+Feature E
+5,7,10,11
+Feature C
+2,6,4,9
+Feature E
+3,10,14,5
+Feature E
+3,11,14,3
