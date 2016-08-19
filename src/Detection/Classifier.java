@@ -11,12 +11,12 @@ package Detection;
  */
 public class Classifier {
 
-    private double[] mAlpha;
+    private float[] mAlpha;
     private int[] mPolarity;
-    private double[] mThreshold;
+    private float[] mThreshold;
     private double[] mFeatures;
 
-    public Classifier(double[] alpha, int[] polarity, double[] threshold) {
+    public Classifier(float[] alpha, int[] polarity, float[] threshold) {
         this.mAlpha = alpha;
         this.mPolarity = polarity;
         this.mThreshold = threshold;

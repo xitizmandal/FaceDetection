@@ -7,10 +7,12 @@
             <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/Detection/Classifier.java</file>
             <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/HaarComplete/HaarComplete.java</file>
             <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/haarfilterall/features/Features.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/Detection/util/DataReader.java</file>
             <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/WeakClassifier/WeakLearner.java</file>
             <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/Detection/util/TestFeatures.java</file>
             <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/StrongClassifier/StrongClassifier.java</file>
             <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/StrongClassifier/util/SortPlusIndex.java</file>
+            <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/CustomDataStructure/ClassifierData.java</file>
             <file>file:/home/xitiz/NetBeansProjects/aditya/CompleteHaarFeatures/src/haarfilterall/util/CalculateArea.java</file>
         </group>
     </open-files>

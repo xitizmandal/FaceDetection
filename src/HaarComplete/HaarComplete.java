@@ -31,7 +31,7 @@ public class HaarComplete {
     public static void main(String[] args) throws IOException, InterruptedException {
         FaceDetection faceDetection = new FaceDetection();
 
-        /*float[] twoHoriFea = new float[36432];
+       /* float[] twoHoriFea = new float[36432];
         float[] twoVertFea = new float[36432];
         float[] threeHoriFea = new float[23184];
         float[] fourRectFea = new float[17424];
@@ -39,10 +39,11 @@ public class HaarComplete {
         int[][] intValues = new int[24][24];
         int[] iarray = new int[3];
 
-        int totalImageNumber = 1500;
+        int totalImageNumber = 3500;
         int testImagesNum = totalImageNumber - 1;
         int totalFeaturesNum = 113472;
-        int positiveImageNum = 500;
+        int positiveImageNum = 1500;
+        int valueToAdd = 4116 - positiveImageNum;
 
         Features features = new Features();
         IntegralImage integralImage = new IntegralImage();
@@ -55,7 +56,7 @@ public class HaarComplete {
             if (imageCount < positiveImageNum) {
                 img = ImageIO.read(new File("database/test" + (imageCount + 1) + ".png"));
             } else {
-                img = ImageIO.read(new File("database/test" + (imageCount + 1 + 3616) + ".png"));
+                img = ImageIO.read(new File("database/test" + (imageCount + 1 + valueToAdd) + ".png"));
             }
 
             HistEq histEq = new HistEq();                                           //call histogram equilization

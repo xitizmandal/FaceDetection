@@ -292,10 +292,11 @@ public class StrongClassifier {
                     + " featureIndex " + weakClassifier[3][t]
                     + " alpha " + alpha[t]);
 
-            String content = ("Classifier " + t + " minError " + weakClassifier[0][t]
-                    + " Polarity " + weakClassifier[1][t]
-                    + " threshold " + weakClassifier[2][t]
-                    + " featureIndex " + weakClassifier[3][t] + " alpha " + alpha[t] + "\n");
+            //Store value as Polarity,threshold,featureIndex,alpha
+            String content = (weakClassifier[1][t]
+                    + "," + weakClassifier[2][t]
+                    + " ," + weakClassifier[3][t]
+                    + "," + alpha[t] + "\n");
 
             writeContent += content;
 
@@ -319,7 +320,7 @@ public class StrongClassifier {
         }
 
         try {
-            FileWriter writer = new FileWriter(new File("classifer/Classifier" + mStage + ".txt"));
+            FileWriter writer = new FileWriter(new File("classifier/Classifier" + mStage + ".txt"));
             writer.write(writeContent);
             writer.close();
         } catch (IOException e) {
