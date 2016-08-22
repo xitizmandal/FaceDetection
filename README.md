@@ -5,7 +5,7 @@ Viola Jones Robust Real-Time Face Detection process was the chosen implementatio
 
 1. Image Input
 2. Grayscale & Histogram equalization
-3. Sub-imaging with pyramid structure
+3. Sub-imaging
 4. Integral Images
 5. Extracting HAAR like features
 6. Adaptivie Boosting (AdaBoost)
