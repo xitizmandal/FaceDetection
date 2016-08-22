@@ -16,7 +16,7 @@ Viola Jones Robust Real-Time Face Detection process was the chosen implementatio
 https://docs.google.com/presentation/d/1AmX8Lfe9MZJze18w2LKvcQQBa9cpgp60luoeice8Vco/edit?ts=57b6fd8d#slide=id.p
 
 # Application apk
-https://drive.google.com/open?id=0BwbJALYp8j2BZzg5cGpiZEFpYm8
+https://drive.google.com/open?id=0BwbJALYp8j2BbWJDb1l6eXUybFE
 
 # References
 
