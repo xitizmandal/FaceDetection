@@ -12,6 +12,12 @@ Viola Jones Robust Real-Time Face Detection process was the chosen implementatio
 7. Classifier 
 8. Face Detection
 
+# Presentation Slides
+https://docs.google.com/presentation/d/1AmX8Lfe9MZJze18w2LKvcQQBa9cpgp60luoeice8Vco/edit?ts=57b6fd8d#slide=id.p
+
+# Application apk
+https://drive.google.com/open?id=0BwbJALYp8j2BT3JjYk4xSVdXSHM
+
 # References
 
 http://www.cs.unc.edu/~lazebnik/spring09/viola_jones.pdf
