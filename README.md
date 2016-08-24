@@ -8,7 +8,7 @@ Viola Jones Robust Real-Time Face Detection process was the chosen implementatio
 3. Sub-imaging
 4. Integral Images
 5. Extracting HAAR like features
-6. Adaptivie Boosting (AdaBoost)
+6. Adaptive Boosting (AdaBoost)
 7. Classifier 
 8. Face Detection
 
