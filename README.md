@@ -18,6 +18,9 @@ https://docs.google.com/presentation/d/1AmX8Lfe9MZJze18w2LKvcQQBa9cpgp60luoeice8
 # Application apk
 https://drive.google.com/open?id=0BwbJALYp8j2BbWJDb1l6eXUybFE
 
+# Application Demo Video
+https://www.youtube.com/watch?v=rood04DobBA
+
 # References
 
 http://www.cs.unc.edu/~lazebnik/spring09/viola_jones.pdf
