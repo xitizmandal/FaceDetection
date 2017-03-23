@@ -17,6 +17,8 @@ https://docs.google.com/presentation/d/1AmX8Lfe9MZJze18w2LKvcQQBa9cpgp60luoeice8
 
 # Application apk
 https://drive.google.com/open?id=0BwbJALYp8j2BbWJDb1l6eXUybFE
+This apk does not include our detection due to the lack of post processing and size constraints.
+This is just a prototype apk.
 
 # Application Demo Video
 https://www.youtube.com/watch?v=rood04DobBA
